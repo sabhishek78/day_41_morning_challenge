@@ -78,31 +78,36 @@ List flattenList(List inputList, List outputList) {
 main() {
   // print(possibleMoves([[1],[2],[3,4]]));
   // print(bestMove([[],[1],[2,3,4]]));
-/* print(bestOneMoveToWin([
+print(bestOneMoveToWin([
     [],
     [1,2],
     [3, 4]
-  ]));*/
- /*print(bestTwoMoveToWin([
+  ]));
+  /*print(bestTwoMoveToWin([
     [2],
     [1],
     [3, 4]
   ]));*/
   // print(bestMove([[1],[],[2,3,4]]));
- /*print(bestThreeMoveToWin([[1,2], [], [3,4]]));*/
-  print(bestNMoveToWin([
+  /*print(bestThreeMoveToWin([[1,2], [], [3,4]]));*/
+ /* print(bestNMoveToWin([
     [2],
     [1],
     [3, 4]
-  ], 2));
+  ], 2));*/
+ /* print(bestNMoveToWin([
+    [3],
+    [2],
+    [1, 4]
+  ], 5));*/
 }
 
 List<List<int>> bestOneMoveToWin(List<List<int>> inputList) {
   List<List<List<int>>> listOfPossibleMoves = possibleMoves(inputList);
-  print(listOfPossibleMoves);
+  //print(listOfPossibleMoves);
   for (int i = 0; i < listOfPossibleMoves.length; i++) {
     if (checkWin(listOfPossibleMoves[i])) {
-      return inputList;
+      return listOfPossibleMoves[i];
     }
   }
   return null;
@@ -115,9 +120,9 @@ bool checkWin(List<List<int>> inputList) {
 List<List<int>> bestTwoMoveToWin(List<List<int>> inputList) {
   List<List<List<int>>> listOfPossibleMoves = possibleMoves(inputList);
   for (int i = 0; i < listOfPossibleMoves.length; i++) {
-     if((bestOneMoveToWin(listOfPossibleMoves[i]))!=null){
-       return listOfPossibleMoves[i];
-     }
+    if((bestOneMoveToWin(listOfPossibleMoves[i]))!=null){
+      return listOfPossibleMoves[i];
+    }
   }
   return null;
 }
@@ -132,7 +137,10 @@ List<List<int>> bestThreeMoveToWin(List<List<int>> inputList) {
 }
 List<List<int>> bestNMoveToWin(List<List<int>> inputList, int N) {
   if(N==1){
-    return inputList;
+    return bestOneMoveToWin(inputList);
+
+
+
   }
   List<List<List<int>>> listOfPossibleMoves = possibleMoves(inputList);
   for (int i = 0; i < listOfPossibleMoves.length; i++) {
