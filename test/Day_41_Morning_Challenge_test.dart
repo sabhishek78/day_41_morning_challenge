@@ -10,6 +10,10 @@ void main() {
    expect(bestOneMoveToWin([[1], [], [2,3,4]]),
        [[],[],[1,2,3,4]]);
  });
+ test('Best One Move To Win', () {
+   expect(bestOneMoveToWin([[1], [2], [3,4]]),
+       null);
+ });
   test('Best Two Move To Win', () {
     expect(bestTwoMoveToWin([[1], [2], [3,4]]),
         [[1],[],[2,3,4]]);
@@ -22,10 +26,10 @@ void main() {
 
   test('Best Three Move To Win', () {
     expect(bestThreeMoveToWin([[], [1,2], [3,4]]),
-        [[1],[],[2,3,4]]);
+        [[1],[2],[3,4]]);
   });
  test('Best N Move To Win', () {
    expect(bestNMoveToWin([[], [1,2], [3,4]],3),
-       [[1],[],[2,3,4]]);
+       [[1],[2],[3,4]]);
  });
 }

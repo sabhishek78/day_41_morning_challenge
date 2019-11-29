@@ -11,15 +11,19 @@
 // Stretch: Show all moves which lead to win, given a state.
 // Challenge
 // Find the best move given the state of Towers of Hanoi board
-List<List<List<int>>> result = [];
+
 
 List<List<List<int>>> possibleMoves(List<List<int>> inputList) {
+  List<List<List<int>>> result = [];
   for (int i = 0; i < inputList.length; i++) {
     for (int j = 0; j < inputList.length; j++) {
       if (validMove(inputList, i, j)) {
         List<List<int>> copyOfInputList = [];
         makeCopy(inputList, copyOfInputList);
-        makeMove(copyOfInputList, i, j);
+        copyOfInputList[j].insert(0, copyOfInputList[i][0]);
+        copyOfInputList[i].removeAt(0);
+
+        result.add(copyOfInputList);
       }
     }
   }
@@ -44,14 +48,14 @@ makeCopy(List<List<int>> inputList, List<List<int>> copyOfInputList) {
     copyOfInputList.add(temp);
   }
 }
-
+/*
 makeMove(List<List<int>> copyOfInputList, int i, int j) {
   copyOfInputList[j].insert(0, copyOfInputList[i][0]);
   copyOfInputList[i].removeAt(0);
 
   result.add(copyOfInputList);
 }
-
+*/
 List flattenList(List inputList, List outputList) {
   for (int i = 0; i < inputList.length; i++) {
     dynamic element = inputList[i];
@@ -76,35 +80,36 @@ List flattenList(List inputList, List outputList) {
 }
 
 main() {
-  // print(possibleMoves([[1],[2],[3,4]]));
-  // print(bestMove([[],[1],[2,3,4]]));
-print(bestOneMoveToWin([
-    [],
-    [1,2],
+  print(possibleMoves([[1],[2],[3,4]]));
+
+print(bestOneMoveToWin([[], [1,2], [3, 4]]));
+print(bestOneMoveToWin([[1], [], [2,3,4]]));
+print(bestOneMoveToWin([[], [1], [2,3,4]]));
+print(bestOneMoveToWin([[], [], [1,2,3,4]]));
+print(bestOneMoveToWin([[1,2,3,4], [], []]));
+  print(bestTwoMoveToWin([[2], [1], [3, 4]]));
+  print(bestTwoMoveToWin([
+    [1],
+    [2],
     [3, 4]
   ]));
-  /*print(bestTwoMoveToWin([
+
+  print(bestThreeMoveToWin([[1,2], [], [3,4]]));
+  print(bestNMoveToWin([
     [2],
     [1],
     [3, 4]
-  ]));*/
-  // print(bestMove([[1],[],[2,3,4]]));
-  /*print(bestThreeMoveToWin([[1,2], [], [3,4]]));*/
- /* print(bestNMoveToWin([
-    [2],
-    [1],
-    [3, 4]
-  ], 2));*/
- /* print(bestNMoveToWin([
+  ], 2));
+  print(bestNMoveToWin([
     [3],
     [2],
     [1, 4]
-  ], 5));*/
+  ], 5));
 }
 
 List<List<int>> bestOneMoveToWin(List<List<int>> inputList) {
   List<List<List<int>>> listOfPossibleMoves = possibleMoves(inputList);
-  //print(listOfPossibleMoves);
+
   for (int i = 0; i < listOfPossibleMoves.length; i++) {
     if (checkWin(listOfPossibleMoves[i])) {
       return listOfPossibleMoves[i];
@@ -119,6 +124,7 @@ bool checkWin(List<List<int>> inputList) {
 
 List<List<int>> bestTwoMoveToWin(List<List<int>> inputList) {
   List<List<List<int>>> listOfPossibleMoves = possibleMoves(inputList);
+  print("List of Possible Moves=$listOfPossibleMoves");
   for (int i = 0; i < listOfPossibleMoves.length; i++) {
     if((bestOneMoveToWin(listOfPossibleMoves[i]))!=null){
       return listOfPossibleMoves[i];
@@ -138,9 +144,6 @@ List<List<int>> bestThreeMoveToWin(List<List<int>> inputList) {
 List<List<int>> bestNMoveToWin(List<List<int>> inputList, int N) {
   if(N==1){
     return bestOneMoveToWin(inputList);
-
-
-
   }
   List<List<List<int>>> listOfPossibleMoves = possibleMoves(inputList);
   for (int i = 0; i < listOfPossibleMoves.length; i++) {
